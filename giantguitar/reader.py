@@ -20,8 +20,3 @@ class Reader(object):
     def fetch(self):
         for ch in self.channels:
             self.channels[ch] = self.read_channel(ch)
-
-
-
-    
-

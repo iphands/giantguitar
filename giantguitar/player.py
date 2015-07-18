@@ -8,7 +8,6 @@ class Player(object):
         self.sounder = sounder
         with open('chords.js') as file:
             self.chords = json.load(file)
-        #print(self.chords)
 
     def chord(self, k):
         print (self.chords[k])
@@ -39,5 +38,3 @@ def worker(q, name, song):
                 break
         q["play"].put(e[0])
         time.sleep((whole / 1000.0) * e[1])
-        
-        

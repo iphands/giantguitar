@@ -34,7 +34,7 @@ def main():
 
     for ch in lights:
       debug_str += "{}:{} ".format(ch, lights[ch])
-      if lights[ch] > 444 or ch == 0 or ch == 1:
+      if lights[ch] > 444:
         sounder.start(ch+1)
       else:
         sounder.stop(ch+1)
