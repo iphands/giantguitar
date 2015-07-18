@@ -3,28 +3,49 @@
 import os
 import time
 from reader import Reader 
+from sounder import Sounder
 from player import Player
 
 def main():
-  delay = .03
+  delay = .25
   lights = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
 
   reader = Reader(lights)  
-  player = Player()
-  
+  sounder = Sounder()
+  player = Player(sounder)
+  player.song("polly")
+  i = 0
+
+
+
   while True:
     time.sleep(delay)
     reader.fetch()
-    os.system('clear')
+    #os.system('clear')
+
+    # if (i == 4):
+    #   player.chord("a")
+
+    # if (i == 8):
+    #   player.chord("c")
+
+    # if (i == 12):
+    #   player.chord("f")
+
+
+    # if (i > 18):
+    #   player.chord("e")
+    #   i = 0
+
+    # i += 1
 
     for ch in lights:
-      if lights[ch] < 300:
-        player.stop(ch+1)
+      if lights[ch] > 333 or ch == 4:
+        sounder.start(ch+1)
       else:
-        player.start(ch+1)
-
-      print("{}: {}".format(ch, lights[ch]))
-    print("--------------------------------------------")
+        sounder.stop(ch+1)
+      #print("{}: {}".format(ch, lights[ch]))
+    #print("--------------------------------------------")
     time.sleep(delay)
               
 if __name__ == "__main__":
