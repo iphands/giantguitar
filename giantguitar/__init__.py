@@ -7,7 +7,7 @@ import signal
 import atexit
 from Queue import Queue
 
-from reader import Reader 
+from reader import Reader
 from sounder import Sounder
 from player import Player
 
@@ -18,7 +18,7 @@ def main():
   delay = .01
   lights = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
 
-  reader = Reader(lights)  
+  reader = Reader(lights)
   sounder = Sounder()
   player = Player(sounder)
   q = player.song("ripple")
@@ -28,13 +28,13 @@ def main():
     time.sleep(delay)
     reader.fetch()
     #os.system('clear')
-    
+
     if not q["play"].empty():
       player.chord(q["play"].get_nowait())
 
     for ch in lights:
       debug_str += "{}:{} ".format(ch, lights[ch])
-      if lights[ch] > 900:
+      if lights[ch] > 444 or ch == 0 or ch == 1:
         sounder.start(ch+1)
       else:
         sounder.stop(ch+1)
@@ -55,4 +55,3 @@ if __name__ == "__main__":
   signal.signal(signal.SIGINT, sig_handler)
   atexit.register(cleanup)
   main()
-
