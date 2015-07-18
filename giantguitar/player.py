@@ -1,6 +1,7 @@
 import json
 import threading
 import time
+from Queue import Queue
 
 class Player(object):
     def __init__(self, sounder):
@@ -17,15 +18,17 @@ class Player(object):
 
     def song(self, name):
         with open("songs/" + name + ".js") as file:
+            q = Queue()
             song = json.load(file)
-            threading.Thread(target=worker, args=(self, self.sounder, name, song)).start()
+            threading.Thread(target=worker, args=(q, name, song)).start()
+            return q
 
-def worker(player, sounder, name, song):
+def worker(q, name, song):
     print("Playing: {} at tempo {}".format(name, song["tempo"]))
     tempo = int(song["tempo"])
     for e in song["chords"]:
         print(e)
-        player.chord(e[0])
-        time.sleep(1)
+        q.put(e[0])
+        time.sleep((tempo / 1000.0) * e[1])
         
         
