@@ -1,7 +1,9 @@
 import json
 import threading
 import time
+import subprocess
 from Queue import Queue
+
 
 class Player(object):
     def __init__(self, sounder):
@@ -24,17 +26,21 @@ class Player(object):
         with open("songs/" + name + ".js") as file:
             song = json.load(file)
             self.check_song(name, song)
-            q = { "play": Queue(), "control": Queue() }
+            subprocess.call('echo "Welcome to geekSPARK... the Giant Guitar is going to play ' + song["name"]  + '" | festival --tts', shell=True)
+            q = { "play": Queue(), "control": Queue(), "sig": "playing" }
             threading.Thread(target=worker, args=(q, name, song)).start()
             return q
 
 def worker(q, name, song):
     tempo = int(song["tempo"])
+    tempo = tempo * 1.5
     whole = (60000 / tempo) * 4
     print("\n\nPlaying: {} at tempo {} (a whole note is {}ms)\n\n".format(name, tempo, whole))
     for e in song["chords"]:
+        q["sig"] = "playing"
         if not q["control"].empty():
             if q["control"].get_nowait() == "stop":
                 break
         q["play"].put(e[0])
         time.sleep((whole / 1000.0) * e[1])
+    q["sig"] = "stopped"

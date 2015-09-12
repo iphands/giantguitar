@@ -6,10 +6,14 @@ import time
 import signal
 import atexit
 from Queue import Queue
+from itertools import cycle
 
+# mine
 from reader import Reader
 from sounder import Sounder
 from player import Player
+
+
 
 q = {}
 
@@ -21,27 +25,37 @@ def main():
   reader = Reader(lights)
   sounder = Sounder()
   player = Player(sounder)
-  q = player.song("ripple")
+  songs = ["polly", "ripple"]
 
-  while True:
-    debug_str = ""
-    time.sleep(delay)
-    reader.fetch()
-    #os.system('clear')
+  for song in cycle(songs):
+    time.sleep(2)
+    q = player.song(song)
 
-    if not q["play"].empty():
-      player.chord(q["play"].get_nowait())
+    while True:
+      debug_str = ""
+      time.sleep(delay)
+      reader.fetch()
+      #os.system('clear')
 
-    for ch in lights:
-      debug_str += "{}:{} ".format(ch, lights[ch])
-      if lights[ch] > 444:
-        sounder.start(ch+1)
-      else:
-        sounder.stop(ch+1)
-      # print("{}: {}".format(ch, lights[ch]))
-    # print("--------------------------------------------")
-    print(debug_str)
-    time.sleep(delay)
+      if not q["play"].empty():
+        player.chord(q["play"].get_nowait())
+
+      for ch in lights:
+        debug_str += "{}:{} ".format(ch, lights[ch])
+        if lights[ch] < 300:
+          sounder.start(ch+1)
+        else:
+          sounder.stop(ch+1)
+          # print("{}: {}".format(ch, lights[ch]))
+          # print("--------------------------------------------")
+      print(debug_str)
+      time.sleep(delay)
+
+      print q["sig"]
+      if q["sig"] == "stopped":
+        print "caught sig... stopping song"
+        sounder.mute()
+        break
 
 def sig_handler(sig, frame):
   cleanup()

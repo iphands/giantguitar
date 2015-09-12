@@ -2,7 +2,6 @@ from pyo import *
 import random
 
 class Sounder(object):
-
     def __init__(self):
         self.OPEN = {
             1: 329.63,
@@ -32,8 +31,13 @@ class Sounder(object):
         self.fret(5, 2)
         self.fret(4, 2)
         self.fret(3, 1)
-
         self.s.start()
+        self.mute()
+
+    def mute(self):
+        print("MUTING")
+        for i in range(1, 7):
+            self.stop(i)
 
     def start(self, s):
         if not self.strings[s]["state"]:

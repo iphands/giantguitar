@@ -1,4 +1,5 @@
 {
+    "name": "ripple, by the greatful dead",
     "tempo":  150,
     "chords": [
 
