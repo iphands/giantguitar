@@ -12,10 +12,15 @@ class Player(object):
             self.chords = json.load(file)
 
     def chord(self, k):
-        print (self.chords[k])
-        for s_str in self.chords[k]:
-            s = int(s_str)
-            self.sounder.fret(s, self.chords[k][s_str])
+        c = self.chords[k]
+        # print ("chord is: " + c)
+        if k == "r":
+            print("resting")
+            self.sounder.mute()
+        else:
+            for s_str in c:
+                s = int(s_str)
+                self.sounder.fret(s, c[s_str])
 
     def check_song(self, name, song):
         for e in song["chords"]:
@@ -33,14 +38,18 @@ class Player(object):
 
 def worker(q, name, song):
     tempo = int(song["tempo"])
-    tempo = tempo * 1.5
+    tempo = tempo * 1.2
     whole = (60000 / tempo) * 4
     print("\n\nPlaying: {} at tempo {} (a whole note is {}ms)\n\n".format(name, tempo, whole))
-    for e in song["chords"]:
+
+    for chord in song["chords"]:
         q["sig"] = "playing"
         if not q["control"].empty():
             if q["control"].get_nowait() == "stop":
                 break
-        q["play"].put(e[0])
-        time.sleep((whole / 1000.0) * e[1])
+
+        print("DEBUG")
+        print("test" + chord[0])
+        q["play"].put(chord[0])
+        time.sleep((whole / 1000.0) * chord[1])
     q["sig"] = "stopped"

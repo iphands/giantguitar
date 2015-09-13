@@ -38,6 +38,7 @@ class Sounder(object):
         print("MUTING")
         for i in range(1, 7):
             self.stop(i)
+            #self.fret(i, 1000)
 
     def start(self, s):
         if not self.strings[s]["state"]:
@@ -52,6 +53,7 @@ class Sounder(object):
             self.strings[s]["state"] = False
 
     def fret(self, s, num):
+        print("fretting {} to {}".format(s, num))
         self.freq(s, self.OPEN[s] * (2.**(1./12.))**num)
 
     def freq(self, s, hz):

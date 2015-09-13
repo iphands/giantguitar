@@ -17,6 +17,9 @@ from player import Player
 
 q = {}
 
+def get_str(ch):
+  return 6 - ch
+
 def main():
   global q
   delay = .01
@@ -25,10 +28,11 @@ def main():
   reader = Reader(lights)
   sounder = Sounder()
   player = Player(sounder)
-  songs = ["polly", "ripple"]
+  songs = ["wishhere", "polly", "ripple"]
+  #songs = ["ripple"]
 
   for song in cycle(songs):
-    time.sleep(2)
+    time.sleep(.5)
     q = player.song(song)
 
     while True:
@@ -42,16 +46,13 @@ def main():
 
       for ch in lights:
         debug_str += "{}:{} ".format(ch, lights[ch])
-        if lights[ch] < 300:
-          sounder.start(ch+1)
+        if lights[ch] > 300:
+          sounder.start(get_str(ch))
         else:
-          sounder.stop(ch+1)
-          # print("{}: {}".format(ch, lights[ch]))
-          # print("--------------------------------------------")
-      print(debug_str)
+          sounder.stop(get_str(ch))
+      #print(debug_str)
       time.sleep(delay)
 
-      print q["sig"]
       if q["sig"] == "stopped":
         print "caught sig... stopping song"
         sounder.mute()
