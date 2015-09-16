@@ -22,7 +22,7 @@ def get_str(ch):
 
 def main():
   global q
-  delay = .01
+  delay = .001
   lights = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
 
   reader = Reader(lights)
@@ -46,11 +46,11 @@ def main():
 
       for ch in lights:
         debug_str += "{}:{} ".format(ch, lights[ch])
-        if lights[ch] > 300:
+        if lights[ch] < 650:
           sounder.start(get_str(ch))
         else:
           sounder.stop(get_str(ch))
-      #print(debug_str)
+      print(debug_str)
       time.sleep(delay)
 
       if q["sig"] == "stopped":

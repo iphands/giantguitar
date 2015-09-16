@@ -47,9 +47,6 @@ def worker(q, name, song):
         if not q["control"].empty():
             if q["control"].get_nowait() == "stop":
                 break
-
-        print("DEBUG")
-        print("test" + chord[0])
         q["play"].put(chord[0])
         time.sleep((whole / 1000.0) * chord[1])
     q["sig"] = "stopped"
