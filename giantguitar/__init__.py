@@ -64,7 +64,7 @@ def main(opts):
         else:
           sounder.stop(get_str(ch))
 
-      print(debug_str)
+      # print(debug_str)
       time.sleep(delay)
 
       if q["sig"] == "stopped":
