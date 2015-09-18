@@ -40,11 +40,8 @@ def main(opts):
   player = Player(sounder)
   songs = os.listdir("./songs/")
   numpy.random.shuffle(songs)
-
-  print("\n\n\n")
-  print songs
-  print("\n\n\n")
-  exit()
+  print("Loaded songs:")
+  print(songs)
 
   for song in cycle(songs):
     # time.sleep(.5)
