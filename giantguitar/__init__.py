@@ -5,9 +5,13 @@ import os
 import time
 import signal
 import atexit
+import random
+import numpy
 from Queue import Queue
 from itertools import cycle
 from optparse import OptionParser
+
+
 
 # mine
 from sounder import Sounder
@@ -34,10 +38,16 @@ def main(opts):
 
   sounder = Sounder()
   player = Player(sounder)
-  songs = ["breathe", "hotrs", "wishhere", "polly", "ripple"]
+  songs = os.listdir("./songs/")
+  numpy.random.shuffle(songs)
+
+  print("\n\n\n")
+  print songs
+  print("\n\n\n")
+  exit()
 
   for song in cycle(songs):
-    #time.sleep(.5)
+    # time.sleep(.5)
     q = player.song(song)
 
     while True:

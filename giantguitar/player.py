@@ -28,7 +28,7 @@ class Player(object):
                 raise Exception("Song {} asks for chord {} but that chord is not defined in chords.js".format(name, e[0]))
 
     def song(self, name):
-        with open("songs/" + name + ".js") as file:
+        with open("songs/" + name) as file:
             song = json.load(file)
             self.check_song(name, song)
             subprocess.call('echo "Welcome to geekSPARK... the Giant Guitar is going to play ' + song["name"]  + '" | festival --tts', shell=True)
