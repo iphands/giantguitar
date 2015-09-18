@@ -10,7 +10,6 @@ from itertools import cycle
 from optparse import OptionParser
 
 # mine
-from reader import Reader
 from sounder import Sounder
 from player import Player
 
@@ -22,6 +21,9 @@ def get_str(ch):
   return 6 - ch
 
 def main(opts):
+  if not opts.demo:
+    from reader import Reader
+
   global q
   delay = .001
   lights = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
