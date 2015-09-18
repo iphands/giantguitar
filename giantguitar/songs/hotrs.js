@@ -1,5 +1,5 @@
 {
-    "name": "house of the rising sun by the animals",
+    "name": "house of the rising sun, by the animals",
     "tempo": 80,
     "chords": [
         ["am", 0.5],

@@ -7,6 +7,7 @@ import signal
 import atexit
 from Queue import Queue
 from itertools import cycle
+from optparse import OptionParser
 
 # mine
 from reader import Reader
@@ -20,36 +21,40 @@ q = {}
 def get_str(ch):
   return 6 - ch
 
-def main():
+def main(opts):
   global q
   delay = .001
   lights = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
 
-  reader = Reader(lights)
+  print opts
+  if not opts.demo:
+    reader = Reader(lights)
+
   sounder = Sounder()
   player = Player(sounder)
-  songs = ["wishhere", "polly", "ripple"]
-  #songs = ["ripple"]
+  songs = ["breathe", "hotrs", "wishhere", "polly", "ripple"]
 
   for song in cycle(songs):
-    time.sleep(.5)
+    #time.sleep(.5)
     q = player.song(song)
 
     while True:
       debug_str = ""
       time.sleep(delay)
-      reader.fetch()
-      #os.system('clear')
+
+      if not opts.demo:
+        reader.fetch()
 
       if not q["play"].empty():
         player.chord(q["play"].get_nowait())
 
       for ch in lights:
         debug_str += "{}:{} ".format(ch, lights[ch])
-        if lights[ch] < 650:
+        if lights[ch] < 650 or opts.demo:
           sounder.start(get_str(ch))
         else:
           sounder.stop(get_str(ch))
+
       print(debug_str)
       time.sleep(delay)
 
@@ -67,6 +72,9 @@ def cleanup():
   sys.exit(0)
 
 if __name__ == "__main__":
+  parser = OptionParser()
+  parser.add_option("-d", "--demo", dest="demo", action="store_true", default=False)
+  (options, args) = parser.parse_args()
   signal.signal(signal.SIGINT, sig_handler)
   atexit.register(cleanup)
-  main()
+  main(options)

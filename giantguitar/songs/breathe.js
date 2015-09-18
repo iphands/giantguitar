@@ -1,5 +1,5 @@
 {
-    "name": "breathe by pink floyd",
+    "name": "breathe, by pink floyd",
     "tempo": 126,
     "chords": [
         ["emadd9", 2],
