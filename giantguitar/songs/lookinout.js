@@ -1,5 +1,5 @@
 {
-    "name": "lookin out my back door by creedence clearwater revival",
+    "name": "lookin out my back door, by creedence clearwater revival",
     "tempo": 105,
     "chords": [
         ["bb", 1],

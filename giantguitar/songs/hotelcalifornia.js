@@ -1,5 +1,5 @@
 {
-    "name": "hotel california by the eagles",
+    "name": "hotel california, by the eagles",
     "tempo": 74,
     "chords": [
         ["bm", 1],

@@ -1,5 +1,5 @@
 {
-    "name": "bad moon rising by creedence clearwater revival",
+    "name": "bad moon rising, by creedence clearwater revival",
     "tempo": 90,
     "chords": [
         ["d", 0.5],

@@ -1,5 +1,5 @@
 {
-    "name": "kids in america by kim wilde",
+    "name": "kids in america, by kim wilde",
     "tempo": 80,
     "chords": [
         ["b", 2],
@@ -42,6 +42,6 @@
         ["d", 0.5],
         ["g", 0.5],
         ["a", 0.5],
-        ["b", 1]        
+        ["b", 1]
     ]
 }
