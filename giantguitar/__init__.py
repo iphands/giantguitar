@@ -39,6 +39,8 @@ def main(opts):
   sounder = Sounder()
   player = Player(sounder)
   songs = os.listdir("./songs/")
+  songs = filter(lambda x: x.endswith('.js'), songs)
+
   numpy.random.shuffle(songs)
   print("Loaded songs:")
   print(songs)
